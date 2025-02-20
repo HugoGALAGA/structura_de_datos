@@ -33,7 +33,7 @@ class Stack:
         return " -> ".join(map(str, self.stack))
 
 # Medir el tiempo de inserción en la pila
-n = 22000000
+n = 24000000
 stack = Stack(n)
 start_time = time.perf_counter()
 
