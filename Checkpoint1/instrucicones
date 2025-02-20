@@ -1,0 +1,118 @@
+1)Seleccione una estructura , stack p queue, para realizar su examen. 
+
+2)con la estrucctura seleccionada encontrar un n con el cual instanciar la estructua 
+e insertar n elementos tome por lo menos 5 segundos (perfilar tiempo, en los demas numero de instancias)
+
+3)Encontrado n, instanciar cinco estructuras con respectivo tamaños: n, 2n ,3n, 4n y 5n, poblar cada una con los elementos de su preferencia
+[letras del abedecedario por facilidad] (commit despues)
+
+4)para la estructura seleccionada implementar el metodo search(<key>) (commit despues)
+
+5)Para cada una de las instancias debera perfilar las siguientes operaciones:
+
+a- Una busqueda de un elemento que no existe dentro dentro de la estructura
+b- Una operacion de delete (pop/dequeue)
+
+Con los resultados del perfilador, analizar cuantas instrucciones tomo realizar cada una de las operaciones para cada instancia de la estructura,
+almacenarlos en un array de la forma que desee. incluir las  capturas del perfilamineto en el respectivo
+
+6)Crear una grafica que muestre: (commit)
+
+a-En el eje x, los cinco puntos correspondientes al tamaño n de las instancias 
+b- en el eje y,
+   - La funcion correspondiente a los tiempos del search
+   - la funcion correspondiente a los tiempos del delete
+
+exportar en formato png e incluir en el repo
+
+'''
+Circular Queue implementation.
+'''
+
+
+class CircularQueue:
+    def __init__(self, size: int):
+        self.max = size
+        self.elements = [None] * size
+        self.front = -1
+        self.rear = -1
+
+    def __repr__(self) -> str:
+        return f'Queue: {self.elements} | F: {self.front} | R: {self.rear}'
+
+    def enqueue(self, val: str) -> None:
+        if (self.front == 0 and self.rear == self.max - 1) or (self.rear == self.front - 1):
+            print('Queue overflow...')
+            return None 
+    
+        if self.front == -1 and self.rear == -1:
+            self.front = 0
+            self.rear = 0
+        elif self.rear == self.max - 1 and self.front != 0:
+            self.rear = 0
+        else:
+            self.rear += 1
+
+        self.elements[self.rear] = val
+        
+    def dequeue(self) -> str:
+        if self.front == -1:
+            print('Queue Underflow...')
+            return None
+
+        val = self.elements[self.front]
+        self.elements[self.front] = None
+
+        if self.front == self.rear:
+            self.front = -1
+            self.rear = -1
+        else:
+            if self.front == self.max - 1:
+                self.front = 0
+            else:
+                self.front += 1
+
+        return val
+
+
+
+
+
+'''
+Circular Queue testing.
+'''
+
+
+from circular_queue import CircularQueue
+
+
+# Queue instance
+queue = CircularQueue(5)
+print(queue)
+
+# Enqueues
+queue.enqueue('A')
+print(queue)
+queue.enqueue('B')
+print(queue)
+queue.enqueue('C')
+print(queue)
+queue.enqueue('D')
+print(queue)
+queue.enqueue('E')
+print(queue)
+queue.enqueue('F') # Queue Overflow
+
+# Dequeues
+queue.dequeue()
+print(queue)
+queue.dequeue()
+print(queue)
+
+# Enqueues
+queue.enqueue('F')
+print(queue)
+queue.enqueue('G')
+print(queue)
+queue.enqueue('H')
+print(queue)
