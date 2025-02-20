@@ -33,7 +33,6 @@ class Stack:
     def __str__(self):
         return " -> ".join(map(str, self.stack))
 
-# Determinar los tamaños de las estructuras
 n = 2400000
 sizes = [n, 2*n, 3*n, 4*n, 5*n]
 instances = []
@@ -44,7 +43,6 @@ def get_letter(index):
 
 time_results = []
 
-# Instanciar y poblar las pilas con los tamaños respectivos
 for size in sizes:
     stack = Stack(size)
     start_time = time.perf_counter()
