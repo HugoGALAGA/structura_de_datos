@@ -34,17 +34,16 @@ class Stack:
     def __str__(self):
         return " -> ".join(map(str, self.stack))
 
-def llenar_stack_con_letras(stack): # Función para llenar con letras (usando letras del abecedario como en ejercicio 3)
+def llenar_stack_con_letras(stack):
     letters = string.ascii_uppercase
     for i in range(stack.capacity):
         stack.push(letters[i % len(letters)])
 
-def llenar_stack_con_ceros(stack): # Función para llenar con ceros (como en la imagen de ejemplo)
+def llenar_stack_con_ceros(stack):
     for i in range(stack.capacity):
         stack.push(0)
 
-# Determinar los tamaños de las estructuras (usando el 'n' encontrado en ejercicio 2 - ASUME que n=22000000 es el valor encontrado)
-n = 22000000  # **REEMPLAZA ESTE VALOR con el 'n' que encontraste en el ejercicio 2**
+n = 22000000  
 sizes = [n, 2*n, 3*n, 4*n, 5*n]
 instances = []
 time_results_insertion = []
@@ -52,31 +51,26 @@ time_results_search = []
 memory_results_creation = []
 memory_results_population = []
 memory_results_search = []
-clave_a_buscar_presente = 'A'  # Clave que sabemos que estará presente si llenamos con letras
-clave_a_buscar_ausente = 'Z' # Clave que puede estar ausente o presente dependiendo del llenado y tamaño
+clave_a_buscar_presente = 'A'  
+clave_a_buscar_ausente = 'Z' 
 
 
-# Instanciar y poblar las pilas con los tamaños respectivos y medir tiempos y memoria
 for size in sizes:
-    # Medir memoria antes de la creación de la instancia
     mem_before_creation = memory_usage()[0]
 
     stack = Stack(size)
 
-    # Medir memoria después de la creación de la instancia
     mem_after_creation = memory_usage()[0]
     memory_results_creation.append((size, mem_after_creation - mem_before_creation))
     print(f"Instancia con tamaño {size} creada. Memoria usada en creación: {memory_results_creation[-1][1]:.2f} MB.")
 
 
-    # Medir tiempo de inserción (como en ejercicio 3)
     start_time_insertion = time.perf_counter()
-    llenar_stack_con_letras(stack) # Usamos letras para llenar, puedes cambiar a `llenar_stack_con_ceros(stack)` si prefieres
+    llenar_stack_con_letras(stack) 
     end_time_insertion = time.perf_counter()
     elapsed_time_insertion = end_time_insertion - start_time_insertion
     time_results_insertion.append((size, elapsed_time_insertion))
 
-    # Medir memoria después de poblar la instancia
     mem_after_population = memory_usage()[0]
     memory_results_population.append((size, mem_after_population - mem_after_creation)) # Diferencia desde la creación
     print(f"Instancia con tamaño {size} poblada en {elapsed_time_insertion:.6f} segundos. Memoria usada en población: {memory_results_population[-1][1]:.2f} MB.")
@@ -85,7 +79,6 @@ for size in sizes:
     instances.append(stack)
 
 
-    # Medir tiempo de búsqueda (para clave presente)
     start_time_search_presente = time.perf_counter()
     stack.search(clave_a_buscar_presente)
     end_time_search_presente = time.perf_counter()
@@ -93,18 +86,16 @@ for size in sizes:
     time_results_search.append((size, elapsed_time_search_presente))
     print(f"  Tiempo de búsqueda de '{clave_a_buscar_presente}' (presente) en tamaño {size}: {elapsed_time_search_presente:.6f} segundos.")
 
-    # Medir memoria después de búsqueda (clave presente) - Opcional, para ver si la búsqueda afecta la memoria
     mem_after_search = memory_usage()[0]
-    memory_results_search.append((size, mem_after_search - mem_after_population)) # Diferencia desde la población
+    memory_results_search.append((size, mem_after_search - mem_after_population)) 
     print(f"  Memoria usada en búsqueda de '{clave_a_buscar_presente}' (presente) en tamaño {size}: {memory_results_search[-1][1]:.2f} MB.")
 
 
-    # Medir tiempo de búsqueda (para clave ausente - opcional, pero informativo)
     start_time_search_ausente = time.perf_counter()
     stack.search(clave_a_buscar_ausente)
     end_time_search_ausente = time.perf_counter()
     elapsed_time_search_ausente = end_time_search_ausente - start_time_search_ausente
-    print(f"  Tiempo de búsqueda de '{clave_a_buscar_ausente}' (ausente/presente) en tamaño {size}: {elapsed_time_search_ausente:.6f} segundos.") # Puede estar presente o no dependiendo del tamaño y letras
+    print(f"  Tiempo de búsqueda de '{clave_a_buscar_ausente}' (ausente/presente) en tamaño {size}: {elapsed_time_search_ausente:.6f} segundos.")
     print("-" * 50)
 
 
