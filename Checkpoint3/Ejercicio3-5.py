@@ -38,42 +38,40 @@ def llenar_stack_con_letras(stack):
     for i in range(stack.capacity):
         stack.push(letters[i % len(letters)])
 
-# Determinar los tamaños de las estructuras (usando el 'n' encontrado previamente)
-n = 22000000 # REEMPLAZA ESTE VALOR CON TU 'n' REAL
+n = 22000000 
 sizes = [n, 2*n, 3*n, 4*n, 5*n]
 instances = []
 
-# Crear y poblar las instancias (esto se hace solo una vez al inicio)
 print("Creando y poblando las instancias de Stack...")
 for size in sizes:
     stack = Stack(size)
-    llenar_stack_con_letras(stack) # Poblar cada stack
+    llenar_stack_con_letras(stack) 
     instances.append(stack)
 print("Instancias creadas y pobladas.\n")
 
 def ejecutar_busqueda_inexistente(instance_index):
-    stack_instance = instances[instance_index - 1] # Ajuste de índice (1-5 a 0-4)
+    stack_instance = instances[instance_index - 1] 
     size = sizes[instance_index - 1]
-    clave_inexistente = '#' # Probablemente no esté en el abecedario
+    clave_inexistente = '#' 
     start_time_search_inexistente = time.perf_counter()
-    stack_instance.search(clave_inexistente) # Perform the linear search
+    stack_instance.search(clave_inexistente) 
     end_time_search_inexistente = time.perf_counter()
     elapsed_time_search_inexistente = end_time_search_inexistente - start_time_search_inexistente
-    instrucciones_search = 1 #  One call to search, representing a full linear scan
+    instrucciones_search = 1 
     print(f"Tiempo de búsqueda LINEAL (elemento inexistente) en Stack {instance_index} (tamaño {size}): {elapsed_time_search_inexistente:.6f} segundos. Instancias search (lineal scan): {instrucciones_search}")
     return size, elapsed_time_search_inexistente, instrucciones_search
 
 def ejecutar_pop(instance_index):
-    stack_instance = instances[instance_index - 1] # Ajuste de índice (1-5 a 0-4)
+    stack_instance = instances[instance_index - 1] 
     size = sizes[instance_index - 1]
     start_time_pop_total = time.perf_counter()
     pop_count = 0
-    while not stack_instance.is_empty(): # Vaciar el stack completo
+    while not stack_instance.is_empty(): 
         stack_instance.pop()
         pop_count += 1
     end_time_pop_total = time.perf_counter()
     elapsed_time_pop_total = end_time_pop_total - start_time_pop_total
-    instrucciones_pop = pop_count # Number of pop operations to empty the stack
+    instrucciones_pop = pop_count 
     print(f"Tiempo para VACiar Stack {instance_index} (tamaño {size}) usando pop: {elapsed_time_pop_total:.6f} segundos. Instancias pop (para vaciar): {instrucciones_pop}")
     return size, elapsed_time_pop_total, instrucciones_pop
 
